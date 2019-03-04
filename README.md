@@ -150,5 +150,42 @@ end
 happy = BinaryTree.new(10).left #=> 
 
 ```
+Note: the (*) formal argument to these EmptyNode’s methods simply states that we don’t care how many arguments are passed to the method, and that we won’t be using them anyway.
 
+The EmptyNode class is useful in that it provides a meaningful end to the recursive structure — specifically, that a given range of values in the tree are definitively not present. Otherwise, it does very little. We don’t allow insert to do anything with it, because then it wouldn’t be an empty node. Unfortunately, we can’t simply tell it to replace itself with a Node object (as that isn’t possible in Ruby), so we have to change the reference back at the parent node:
 
+```bash
+
+module BinaryTree
+  class Node
+    private
+      def insert_left(v)
+        left.insert(v) or self.left = Node.new(v)
+      end
+
+      def insert_right(v)
+        right.insert(v) or self.right = Node.new(v)
+      end
+
+  end
+end
+
+```
+
+Here, we use the or control flow operator to perform one of two actions: if the first returns a falsey value, the second (assign the new Node object).
+
+Ok! So we now have a binary tree that can insert new values at the correct location and tell you whether or not it contains a given value. Let’s check it out:
+
+```bash
+
+tree = BinaryTree::Node.new(10)               #=> {10:{}|{}}
+[5, 15, 3].each {|value| tree.insert(value) } #=> {10:{5:{3:{}|{}}|{}}|{15:{}|{}}}
+puts tree.include?(10) #=> true
+puts tree.include?(15) #=> true
+puts tree.include?(20) #=> false
+puts tree.include?(3)  #=> true
+puts tree.include?(2)  #=> false
+
+```
+
+###### To be continued
