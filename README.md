@@ -5,7 +5,7 @@
  1.They contain a value
  2.They can refer to another node to the left with a smaller value
  3.They can refer to another node to the right with a larger value
-###### Implementation :
+#### Implementation :
  My first implementation of this had an overarching Tree class, but it soon became clear that it’s entirely unccessary. As a 
  recursive data structure, each node has a tree descending from it, so we just need a Node. The tree will be implied.
 
@@ -187,7 +187,7 @@ puts tree.include?(3)  #=> true
 puts tree.include?(2)  #=> false
 
 ```
-###### Benchmarks :
+#### Benchmarks :
  Let’s benchmark it! This test populates an array with 5000 random values up to 50,000, that checks every value between 1 and 50,000 to see if the array includes it. The same benchmark is repeated for the binary tree containing an identical set of values.
 
 ```bash
@@ -231,7 +231,7 @@ end
 Ruby’s native C-implemented Hash is around 15 times faster than the Ruby-implemented binary search tree, which is about what I expected.
 
 
-###### Array Conversions :
+#### Array Conversions :
 
 In order to convert arrays into binary trees and back again, let’s introduce a few new methods. The first will be a module method:
 
@@ -304,7 +304,7 @@ binary search   0.190000   0.000000   0.190000 (  0.188989)
 
 It takes about 50% longer than just the binary tree search itself, which makes sense because it traverses the tree twice (once to insert values and once to query them). It doesn’t take twice as long, because we start with a small tree (a single node) and build it up gradually as the values are inserted.
 
-###### Why would I use this?
+#### Why would I use this?
 
 Because of nerdliness?
 
